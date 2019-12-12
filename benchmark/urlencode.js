@@ -10,16 +10,16 @@
  * Module dependencies.
  */
 
-var Benchmark = require('benchmark');
-var benchmarks = require('beautify-benchmark');
-var urlencode = require('../');
+let Benchmark = require('benchmark');
+let benchmarks = require('beautify-benchmark');
+let urlencode = require('../');
 
 console.log('node version: %s', process.version);
 
 function encodeUTF8(str) {
-  var encodeStr = '';
-  var buf = new Buffer(str);
-  for (var i = 0; i < buf.length; i++) {
+  let encodeStr = '';
+  let buf = Buffer.from(str);
+  for (let i = 0; i < buf.length; i++) {
     encodeStr += '%' + buf[i].toString('16');
   }
   return encodeStr.toUpperCase();
@@ -27,20 +27,20 @@ function encodeUTF8(str) {
 
 console.log(decodeURIComponent(encodeUTF8('苏千测试, 哈哈, haha')));
 
-var suite = new Benchmark.Suite();
+let suite = new Benchmark.Suite();
 
 suite
 
 .add('urlencode(str)', function () {
   // urlencode('苏千');
-  urlencode('苏千写的urlencode，应该有用');
+  urlencode.encode('苏千写的urlencode，应该有用');
   // urlencode('suqian want to sleep early tonight.');
   // urlencode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢');
 })
 
 .add('urlencode(str, "gbk")', function () {
   // urlencode('苏千', 'gbk');
-  urlencode('苏千写的urlencode，应该有用', 'gbk');
+  urlencode.encode('苏千写的urlencode，应该有用', 'gbk');
   // urlencode('suqian want to sleep early tonight.', 'gbk');
   // urlencode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢', 'gbk');
 })

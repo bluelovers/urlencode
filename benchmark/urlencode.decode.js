@@ -14,31 +14,32 @@
  * Module dependencies.
  */
 
-var Benchmark = require('benchmark');
-var urlencode = require('../');
+let Benchmark = require('benchmark');
+let benchmarks = require('beautify-benchmark');
+let urlencode = require('../');
 
 console.log('node version: %s, date: %j', process.version, new Date());
 
-var suite = new Benchmark.Suite();
+let suite = new Benchmark.Suite();
 
-var utf8DecodeItems = [
-  urlencode('苏千'),
-  urlencode('苏千写的urlencode，应该有用'),
-  urlencode('suqian want to sleep early tonight.'),
-  urlencode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢'),
+let utf8DecodeItems = [
+  urlencode.encode('苏千'),
+  urlencode.encode('苏千写的urlencode，应该有用'),
+  urlencode.encode('suqian want to sleep early tonight.'),
+  urlencode.encode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢'),
 ];
 
-var gbkDecodeItems = [
-  urlencode('苏千', 'gbk'),
-  urlencode('苏千写的urlencode，应该有用', 'gbk'),
-  urlencode('suqian want to sleep early tonight.', 'gbk'),
-  urlencode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢', 'gbk'),
+let gbkDecodeItems = [
+  urlencode.encode('苏千', 'gbk'),
+  urlencode.encode('苏千写的urlencode，应该有用', 'gbk'),
+  urlencode.encode('suqian want to sleep early tonight.', 'gbk'),
+  urlencode.encode('你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢,你让同一个项目中写两份一样代码的人情何以堪呢', 'gbk'),
 ];
 
 // console.log(urlencode.decode(gbkDecodeItems[3], 'gbk'))
 
-var gbkEncodeString = 'umidtoken=Tc230acc03a564530aee31d22701e9b95&usertag4=0&usertag3=512&usertag2=0&status=0&userid=665377421&out_user=suqian.yf%40taobao.com&promotedtype=0&account_no=20885028063394350156&loginstatus=true&usertag=0&nick=%CB%D5%C7%A7&tairlastupdatetime=1319008872&strid=a68f6ee38f44d2b89ca508444c1ccaf9';
-var data = urlencode.parse(gbkEncodeString, {charset: 'gbk'});
+let gbkEncodeString = 'umidtoken=Tc230acc03a564530aee31d22701e9b95&usertag4=0&usertag3=512&usertag2=0&status=0&userid=665377421&out_user=suqian.yf%40taobao.com&promotedtype=0&account_no=20885028063394350156&loginstatus=true&usertag=0&nick=%CB%D5%C7%A7&tairlastupdatetime=1319008872&strid=a68f6ee38f44d2b89ca508444c1ccaf9';
+let data = urlencode.parse(gbkEncodeString, {charset: 'gbk'});
 
 // console.log(urlencode.stringify(data, {charset: 'gbk'}) === gbkEncodeString);
 
@@ -84,9 +85,11 @@ suite
 
 // add listeners
 .on('cycle', function (event) {
-  console.log(String(event.target));
+  //console.log(String(event.target));
+  benchmarks.add(event.target);
 })
 .on('complete', function () {
-  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+  console.log('Fastest is ' + this.filter('fastest').map('name'));
+  benchmarks.log()
 })
 .run();

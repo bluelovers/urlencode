@@ -1,20 +1,20 @@
-urlencode2 [![Build Status](https://travis-ci.org/alsotang/urlencode.svg)](https://travis-ci.org/alsotang/urlencode)
-=======
+urlencode3 [![Build Status](https://travis-ci.org/bluelovers/urlencode.svg)](https://travis-ci.org/bluelovers/urlencode)
+========================================================================================================================
 
-encodeURIComponent with charset, e.g.: `gbk`
+encodeURIComponent with charset with typescript, e.g.: `gbk`
 
 ## Install
 
 ```bash
-$ npm install urlencode2
+$ yarn add urlencode3
 ```
 
 ## Usage
 
 ### urlencode(string, charset)
 
-```js
-var urlencode = require('urlencode2');
+```typescript
+import urlencode from 'urlencode3';
 
 urlencode('苏千'); // default charset is utf8
 urlencode('苏千', 'gbk'); // => '%CB%D5%C7%A7'

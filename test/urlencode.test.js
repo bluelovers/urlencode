@@ -34,7 +34,7 @@ describe('urlencode.test.js', function () {
       var charset = item[1];
       var expect = item[2];
       it('should enocde ' + str.substring(0, 20) + ' with ' + charset + ' to ' + expect.substring(0, 30), function () {
-        urlencode(str, charset).should.equal(expect);
+        urlencode.encode(str, charset).should.equal(expect);
       });
     });
 
@@ -157,7 +157,7 @@ describe('urlencode.test.js', function () {
 
 
       // str: x[y][0][v][w]=%CE%ED%BF%D5
-      var str = 'x[y][0][v][w]=' + urlencode('雾空', 'gbk');
+      var str = 'x[y][0][v][w]=' + urlencode.encode('雾空', 'gbk');
       var obj =  {'x' : {'y' : [{'v' : {'w' : '雾空'}}]}};
       urlencode.stringify(obj, {charset: 'gbk'}).should.equal(str);
 
@@ -166,7 +166,7 @@ describe('urlencode.test.js', function () {
       // 这里是 chrome 在 gbk 编码网页的行为
       var str = 'xh=13241234' +
         '&xb=1' +
-        '&' + urlencode('雾空', 'gbk') + '=' + urlencode('雾空', 'gbk');
+        '&' + urlencode.encode('雾空', 'gbk') + '=' + urlencode.encode('雾空', 'gbk');
       var obj =  {xh: 13241234, xb: 1, '雾空': '雾空'};
       urlencode.stringify(obj, {charset: 'gbk'}).should.equal(str);
     });
@@ -194,7 +194,7 @@ describe('urlencode.test.js', function () {
     });
 
     it('should work with big5 encoding', function () {
-      var str = 'x[y][0][v][w]=' + urlencode('雾空', 'big5');
+      var str = 'x[y][0][v][w]=' + urlencode.encode('雾空', 'big5');
       var obj =  {'x' : {'y' : [{'v' : {'w' : '雾空'}}]}};
       urlencode.stringify(obj, {charset: 'big5'}).should.equal(str);
     });
@@ -215,12 +215,12 @@ describe('urlencode.test.js', function () {
       // &edp[hello]=100
       // &edp[nihao]=100
       // &good=%BA%C3
-      var qs = 'edp[name][0]=' + urlencode('阿里', encoding) +
-        '&edp[name][1]=' + urlencode('巴巴', encoding) +
-        '&edp[name][2]=' + urlencode('数据产品', encoding) +
+      var qs = 'edp[name][0]=' + urlencode.encode('阿里', encoding) +
+        '&edp[name][1]=' + urlencode.encode('巴巴', encoding) +
+        '&edp[name][2]=' + urlencode.encode('数据产品', encoding) +
         '&edp[hello]=100' +
         '&edp[nihao]=100' +
-        '&good=' + urlencode('好', encoding);
+        '&good=' + urlencode.encode('好', encoding);
       urlencode.stringify(obj, {charset: 'gbk'})
         .should.equal(qs);
     });
