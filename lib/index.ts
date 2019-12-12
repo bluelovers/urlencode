@@ -15,25 +15,26 @@
  */
 
 import { decode } from './decode';
-import { encode as _encode } from './encode';
+import { encode } from './encode';
 import { parse } from './parse';
 import { stringify } from './stringify';
 
-export function encode(...argv: Parameters<typeof _encode>)
+function _encode(...argv: Parameters<typeof encode>)
 {
-	return _encode(...argv)
+	return encode(...argv)
 }
 
-encode.decode = decode;
-encode.parse = parse;
-encode.stringify = stringify;
+_encode.decode = decode;
+_encode.parse = parse;
+_encode.stringify = stringify;
 
-encode.encode = encode;
+_encode.encode = encode;
 
 export {
+	encode,
 	decode,
 	parse,
 	stringify,
 }
 
-export default encode
+export default _encode
